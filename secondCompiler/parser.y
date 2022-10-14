@@ -34,8 +34,15 @@ int semanticCheckPassed = 1;
 %token <char> LBRACE
 %token <char> RBRACE
 %token <char> BinOp
+%token <char> AddOp
+%token <char> SubOp
+%token <char> MultOp
+%token <char> DivOp
+%token <char> LBRACKET
+%token <char> RBRACKET
 %token <number> NUMBER
 %token WRITE
+
 
 %printer { fprintf(yyoutput, "%s", $$); } ID;
 %printer { fprintf(yyoutput, "%d", $$); } NUMBER;

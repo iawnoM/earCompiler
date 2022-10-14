@@ -124,8 +124,8 @@ ws          {delim}+
 		  return LBRACKET;
 		}
 
-"}"		{chars++;
-		  printf("%s : LBRACKET\n", yytext);
+"]"		{chars++;
+		  printf("%s : RBRACKET\n", yytext);
 		  yylval.string = strdup(yytext); 
 		  return LBRACKET;
 		}

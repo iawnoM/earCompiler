@@ -1,0 +1,359 @@
+Terminals unused in grammar
+
+    LBRACE
+    RBRACE
+    AddOp
+    SubOp
+    MultOp
+    DivOp
+    LBRACKET
+    RBRACKET
+
+
+State 8 conflicts: 4 shift/reduce
+State 9 conflicts: 3 shift/reduce
+
+
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: DeclList
+
+    2 DeclList: Decl DeclList
+    3         | StmtList DeclList
+    4         | Decl
+
+    5 Decl: VarDecl
+    6     | StmtList
+
+    7 StmtList: Stmt
+    8         | Stmt StmtList
+
+    9 Stmt: SEMICOLON
+   10     | Expr SEMICOLON
+
+   11 VarDecl: TYPE ID SEMICOLON
+
+   12 AddExpr: ID BinOp AddExpr
+   13        | NUMBER BinOp AddExpr
+   14        | ID
+   15        | NUMBER
+
+   16 Expr: ID EQ AddExpr
+   17     | WRITE ID
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    TYPE <string> (258) 11
+    ID <string> (259) 11 12 14 16 17
+    SEMICOLON <char> (260) 9 10 11
+    EQ <char> (261) 16
+    LBRACE <char> (262)
+    RBRACE <char> (263)
+    BinOp <char> (264) 12 13
+    AddOp <char> (265)
+    SubOp <char> (266)
+    MultOp <char> (267)
+    DivOp <char> (268)
+    LBRACKET <char> (269)
+    RBRACKET <char> (270)
+    NUMBER <number> (271) 13 15
+    WRITE (272) 17
+
+
+Nonterminals, with rules where they appear
+
+    $accept (18)
+        on left: 0
+    Program <ast> (19)
+        on left: 1
+        on right: 0
+    DeclList <ast> (20)
+        on left: 2 3 4
+        on right: 1 2 3
+    Decl <ast> (21)
+        on left: 5 6
+        on right: 2 4
+    StmtList <ast> (22)
+        on left: 7 8
+        on right: 3 6 8
+    Stmt <ast> (23)
+        on left: 9 10
+        on right: 7 8
+    VarDecl <ast> (24)
+        on left: 11
+        on right: 5
+    AddExpr <ast> (25)
+        on left: 12 13 14 15
+        on right: 12 13 16
+    Expr <ast> (26)
+        on left: 16 17
+        on right: 10
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    TYPE       shift, and go to state 1
+    ID         shift, and go to state 2
+    SEMICOLON  shift, and go to state 3
+    WRITE      shift, and go to state 4
+
+    Program   go to state 5
+    DeclList  go to state 6
+    Decl      go to state 7
+    StmtList  go to state 8
+    Stmt      go to state 9
+    VarDecl   go to state 10
+    Expr      go to state 11
+
+
+State 1
+
+   11 VarDecl: TYPE . ID SEMICOLON
+
+    ID  shift, and go to state 12
+
+
+State 2
+
+   16 Expr: ID . EQ AddExpr
+
+    EQ  shift, and go to state 13
+
+
+State 3
+
+    9 Stmt: SEMICOLON .
+
+    $default  reduce using rule 9 (Stmt)
+
+
+State 4
+
+   17 Expr: WRITE . ID
+
+    ID  shift, and go to state 14
+
+
+State 5
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 15
+
+
+State 6
+
+    1 Program: DeclList .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 7
+
+    2 DeclList: Decl . DeclList
+    4         | Decl .
+
+    TYPE       shift, and go to state 1
+    ID         shift, and go to state 2
+    SEMICOLON  shift, and go to state 3
+    WRITE      shift, and go to state 4
+
+    $default  reduce using rule 4 (DeclList)
+
+    DeclList  go to state 16
+    Decl      go to state 7
+    StmtList  go to state 8
+    Stmt      go to state 9
+    VarDecl   go to state 10
+    Expr      go to state 11
+
+
+State 8
+
+    3 DeclList: StmtList . DeclList
+    6 Decl: StmtList .
+
+    TYPE       shift, and go to state 1
+    ID         shift, and go to state 2
+    SEMICOLON  shift, and go to state 3
+    WRITE      shift, and go to state 4
+
+    TYPE       [reduce using rule 6 (Decl)]
+    ID         [reduce using rule 6 (Decl)]
+    SEMICOLON  [reduce using rule 6 (Decl)]
+    WRITE      [reduce using rule 6 (Decl)]
+    $default   reduce using rule 6 (Decl)
+
+    DeclList  go to state 17
+    Decl      go to state 7
+    StmtList  go to state 8
+    Stmt      go to state 9
+    VarDecl   go to state 10
+    Expr      go to state 11
+
+
+State 9
+
+    7 StmtList: Stmt .
+    8         | Stmt . StmtList
+
+    ID         shift, and go to state 2
+    SEMICOLON  shift, and go to state 3
+    WRITE      shift, and go to state 4
+
+    ID         [reduce using rule 7 (StmtList)]
+    SEMICOLON  [reduce using rule 7 (StmtList)]
+    WRITE      [reduce using rule 7 (StmtList)]
+    $default   reduce using rule 7 (StmtList)
+
+    StmtList  go to state 18
+    Stmt      go to state 9
+    Expr      go to state 11
+
+
+State 10
+
+    5 Decl: VarDecl .
+
+    $default  reduce using rule 5 (Decl)
+
+
+State 11
+
+   10 Stmt: Expr . SEMICOLON
+
+    SEMICOLON  shift, and go to state 19
+
+
+State 12
+
+   11 VarDecl: TYPE ID . SEMICOLON
+
+    SEMICOLON  shift, and go to state 20
+
+
+State 13
+
+   16 Expr: ID EQ . AddExpr
+
+    ID      shift, and go to state 21
+    NUMBER  shift, and go to state 22
+
+    AddExpr  go to state 23
+
+
+State 14
+
+   17 Expr: WRITE ID .
+
+    $default  reduce using rule 17 (Expr)
+
+
+State 15
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+State 16
+
+    2 DeclList: Decl DeclList .
+
+    $default  reduce using rule 2 (DeclList)
+
+
+State 17
+
+    3 DeclList: StmtList DeclList .
+
+    $default  reduce using rule 3 (DeclList)
+
+
+State 18
+
+    8 StmtList: Stmt StmtList .
+
+    $default  reduce using rule 8 (StmtList)
+
+
+State 19
+
+   10 Stmt: Expr SEMICOLON .
+
+    $default  reduce using rule 10 (Stmt)
+
+
+State 20
+
+   11 VarDecl: TYPE ID SEMICOLON .
+
+    $default  reduce using rule 11 (VarDecl)
+
+
+State 21
+
+   12 AddExpr: ID . BinOp AddExpr
+   14        | ID .
+
+    BinOp  shift, and go to state 24
+
+    $default  reduce using rule 14 (AddExpr)
+
+
+State 22
+
+   13 AddExpr: NUMBER . BinOp AddExpr
+   15        | NUMBER .
+
+    BinOp  shift, and go to state 25
+
+    $default  reduce using rule 15 (AddExpr)
+
+
+State 23
+
+   16 Expr: ID EQ AddExpr .
+
+    $default  reduce using rule 16 (Expr)
+
+
+State 24
+
+   12 AddExpr: ID BinOp . AddExpr
+
+    ID      shift, and go to state 21
+    NUMBER  shift, and go to state 22
+
+    AddExpr  go to state 26
+
+
+State 25
+
+   13 AddExpr: NUMBER BinOp . AddExpr
+
+    ID      shift, and go to state 21
+    NUMBER  shift, and go to state 22
+
+    AddExpr  go to state 27
+
+
+State 26
+
+   12 AddExpr: ID BinOp AddExpr .
+
+    $default  reduce using rule 12 (AddExpr)
+
+
+State 27
+
+   13 AddExpr: NUMBER BinOp AddExpr .
+
+    $default  reduce using rule 13 (AddExpr)
