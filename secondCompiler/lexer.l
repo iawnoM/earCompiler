@@ -129,6 +129,18 @@ ws          {delim}+
 		  yylval.string = strdup(yytext); 
 		  return LBRACKET;
 		}
+
+"("		{chars++;
+		  printf("%s : LPAREN\n", yytext);
+		  yylval.string = strdup(yytext); 
+		  return LPAREN;
+		}
+
+")"		{chars++;
+		  printf("%s : RPAREN\n", yytext);
+		  yylval.string = strdup(yytext); 
+		  return RPAREN;
+		}
 		
 [\n]	{lines++; chars=0;}
 [ \t]	{chars++;}
