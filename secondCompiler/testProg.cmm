@@ -1,2 +1,8 @@
 int x;
-x = -8;
+int y; 
+int z;
+x = 4;
+y = 5; 
+z = x + y + 1 + 4;
+write x; 
+write z;

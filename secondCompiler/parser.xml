@@ -89,7 +89,7 @@
         <lhs>AddExpr</lhs>
         <rhs>
           <symbol>ID</symbol>
-          <symbol>BinOp</symbol>
+          <symbol>AddOp</symbol>
           <symbol>AddExpr</symbol>
         </rhs>
       </rule>
@@ -97,7 +97,7 @@
         <lhs>AddExpr</lhs>
         <rhs>
           <symbol>NUMBER</symbol>
-          <symbol>BinOp</symbol>
+          <symbol>AddOp</symbol>
           <symbol>AddExpr</symbol>
         </rhs>
       </rule>
@@ -138,8 +138,8 @@
       <terminal symbol-number="6" token-number="261" name="EQ" usefulness="useful"/>
       <terminal symbol-number="7" token-number="262" name="LBRACE" usefulness="unused-in-grammar"/>
       <terminal symbol-number="8" token-number="263" name="RBRACE" usefulness="unused-in-grammar"/>
-      <terminal symbol-number="9" token-number="264" name="BinOp" usefulness="useful"/>
-      <terminal symbol-number="10" token-number="265" name="AddOp" usefulness="unused-in-grammar"/>
+      <terminal symbol-number="9" token-number="264" name="BinOp" usefulness="unused-in-grammar"/>
+      <terminal symbol-number="10" token-number="265" name="AddOp" usefulness="useful"/>
       <terminal symbol-number="11" token-number="266" name="SubOp" usefulness="unused-in-grammar"/>
       <terminal symbol-number="12" token-number="267" name="MultOp" usefulness="unused-in-grammar"/>
       <terminal symbol-number="13" token-number="268" name="DivOp" usefulness="unused-in-grammar"/>
@@ -586,7 +586,7 @@
       </itemset>
       <actions>
         <transitions>
-          <transition type="shift" symbol="BinOp" state="24"/>
+          <transition type="shift" symbol="AddOp" state="24"/>
         </transitions>
         <errors/>
         <reductions>
@@ -607,7 +607,7 @@
       </itemset>
       <actions>
         <transitions>
-          <transition type="shift" symbol="BinOp" state="25"/>
+          <transition type="shift" symbol="AddOp" state="25"/>
         </transitions>
         <errors/>
         <reductions>

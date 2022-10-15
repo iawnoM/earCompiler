@@ -2,7 +2,7 @@ Terminals unused in grammar
 
     LBRACE
     RBRACE
-    AddOp
+    BinOp
     SubOp
     MultOp
     DivOp
@@ -35,8 +35,8 @@ Grammar
 
    11 VarDecl: TYPE ID SEMICOLON
 
-   12 AddExpr: ID BinOp AddExpr
-   13        | NUMBER BinOp AddExpr
+   12 AddExpr: ID AddOp AddExpr
+   13        | NUMBER AddOp AddExpr
    14        | ID
    15        | NUMBER
 
@@ -54,8 +54,8 @@ Terminals, with rules where they appear
     EQ <char> (261) 16
     LBRACE <char> (262)
     RBRACE <char> (263)
-    BinOp <char> (264) 12 13
-    AddOp <char> (265)
+    BinOp <char> (264)
+    AddOp <char> (265) 12 13
     SubOp <char> (266)
     MultOp <char> (267)
     DivOp <char> (268)
@@ -300,20 +300,20 @@ State 20
 
 State 21
 
-   12 AddExpr: ID . BinOp AddExpr
+   12 AddExpr: ID . AddOp AddExpr
    14        | ID .
 
-    BinOp  shift, and go to state 24
+    AddOp  shift, and go to state 24
 
     $default  reduce using rule 14 (AddExpr)
 
 
 State 22
 
-   13 AddExpr: NUMBER . BinOp AddExpr
+   13 AddExpr: NUMBER . AddOp AddExpr
    15        | NUMBER .
 
-    BinOp  shift, and go to state 25
+    AddOp  shift, and go to state 25
 
     $default  reduce using rule 15 (AddExpr)
 
@@ -327,7 +327,7 @@ State 23
 
 State 24
 
-   12 AddExpr: ID BinOp . AddExpr
+   12 AddExpr: ID AddOp . AddExpr
 
     ID      shift, and go to state 21
     NUMBER  shift, and go to state 22
@@ -337,7 +337,7 @@ State 24
 
 State 25
 
-   13 AddExpr: NUMBER BinOp . AddExpr
+   13 AddExpr: NUMBER AddOp . AddExpr
 
     ID      shift, and go to state 21
     NUMBER  shift, and go to state 22
@@ -347,13 +347,13 @@ State 25
 
 State 26
 
-   12 AddExpr: ID BinOp AddExpr .
+   12 AddExpr: ID AddOp AddExpr .
 
     $default  reduce using rule 12 (AddExpr)
 
 
 State 27
 
-   13 AddExpr: NUMBER BinOp AddExpr .
+   13 AddExpr: NUMBER AddOp AddExpr .
 
     $default  reduce using rule 13 (AddExpr)

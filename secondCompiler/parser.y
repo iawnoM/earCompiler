@@ -147,7 +147,7 @@ VarDecl:
 ;
 
 AddExpr:
-	ID BinOp AddExpr {
+	ID AddOp AddExpr {
 		
 		int idValue = getValue($1, currentScope);
 		printf("idValue = %d\n", idValue);
@@ -162,7 +162,7 @@ AddExpr:
 
 	}
 
-	| NUMBER BinOp AddExpr {
+	| NUMBER AddOp AddExpr {
 
 		addNumToArray($1);
 		

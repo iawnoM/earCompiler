@@ -5,6 +5,15 @@ int currentIndex = 0;
 
 //TODO Find way to get value from AST and not the symbolTable
 
+void printArray() {
+    printf("numArray{");
+    for (int i = 0; i < 8; i++)  {
+        printf("%d, ", numArray[i]);
+    }
+    printf("}\n\n");
+    
+}
+
 void addNumToArray(int n) {
 
     numArray[currentIndex] = n;
@@ -26,14 +35,6 @@ int returnSum() {
     return sum;
 }
 
-void printArray() {
-    printf("numArray{");
-    for (int i = 0; i < 8; i++)  {
-        printf("%d, ", numArray[i]);
-    }
-    printf("}\n\n");
-    
-}
 
 void reverseArray(int arr[], int start, int end)
 {
