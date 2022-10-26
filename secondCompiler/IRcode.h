@@ -30,8 +30,18 @@ void emitAssignment(char * id1, char * id2){
 void emitConstantIntAssignment (int idNum, char id2[50]){
 
     IRcode = fopen("IRcode.ir", "a");
-    printf("Test%d\n", idNum);
+    // printf("Test%d\n", idNum);
     fprintf(IRcode, "T%d = %s\n", idNum, id2);
+
+    fclose(IRcode);
+}
+
+void emitArrayDecl (char* id, int size, int idNum) {
+
+    IRcode = fopen("IRcode.ir", "a");
+
+    fprintf(IRcode, "%s[%d]\n", id, size);
+    fprintf(IRcode, "T%d = %s\n", idNum, id);
 
     fclose(IRcode);
 }

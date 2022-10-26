@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:bison="http://www.gnu.org/software/bison/">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>parser.y - GNU Bison XML Automaton Report</title>
+    <style type="text/css">
+      body {
+        font-family: "Nimbus Sans L", Arial, sans-serif;
+        font-size: 9pt;
+      }
+      a:link {
+        color: #1f00ff;
+        text-decoration: none;
+      }
+      a:visited {
+        color: #1f00ff;
+        text-decoration: none;
+      }
+      a:hover {
+        color: red;
+      }
+      #menu a {
+        text-decoration: underline;
+      }
+      .i {
+        font-style: italic;
+      }
+      .pre {
+        font-family: monospace;
+        white-space: pre;
+      }
+      ol.decimal {
+        list-style-type: decimal;
+      }
+      ol.lower-alpha {
+        list-style-type: lower-alpha;
+      }
+      .point {
+        color: #cc0000;
+      }
+      #footer {
+        margin-top: 3.5em;
+        font-size: 7pt;
+      }
+      </style>
+  </head>
+  <body><h1>GNU Bison XML Automaton Report</h1><p>
+    input grammar: <span class="i">parser.y</span></p>
+
+<h3>Table of Contents</h3><ul id="menu"><li><a href="#reductions">Reductions</a><ul class="lower-alpha"><li><a href="#nonterminals_useless_in_grammar">Nonterminals useless in grammar</a></li><li><a href="#terminals_unused_in_grammar">Terminals unused in grammar</a></li><li><a href="#rules_useless_in_grammar">Rules useless in grammar</a></li></ul></li><li><a href="#conflicts">Conflicts</a></li><li><a href="#grammar">Grammar</a><ul class="lower-alpha"><li><a href="#grammar">Itemset</a></li><li><a href="#terminals">Terminal symbols</a></li><li><a href="#nonterminals">Nonterminal symbols</a></li></ul></li><li><a href="#automaton">Automaton</a></li></ul><h2><a name="reductions" id="reductions"></a> Reductions</h2><h3><a name="nonterminals_useless_in_grammar" id="nonterminals_useless_in_grammar"></a> Nonterminals useless in grammar</h3>
+
+<p class="pre">   ArrDecl
+   AddToArr
+
+
+</p><h3><a name="terminals_unused_in_grammar" id="terminals_unused_in_grammar"></a> Terminals unused in grammar</h3>
+
+<p class="pre">   LBRACE
+   RBRACE
+   LPAREN
+   RPAREN
+   APOST
+   FLOAT
+
+
+</p><h3><a name="rules_useless_in_grammar" id="rules_useless_in_grammar"></a> Rules useless in grammar</h3>
+<p class="pre">
+<a name="rule_20" id="rule_20"></a>   20 <span class="i">ArrDecl</span> → <b>TYPE</b> <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>SEMICOLON</b>
+
+
+</p><h2><a name="conflicts" id="conflicts"></a> Conflicts</h2>
+
+<p class="pre"><a href="#state_8">State 8</a> conflicts: 4 shift/reduce
+<a href="#state_9">State 9</a> conflicts: 3 shift/reduce
+
+
+</p><h2><a name="grammar" id="grammar"></a> Grammar</h2>
+<p class="pre">
+<a name="rule_0" id="rule_0"></a>    0 <span class="i">$accept</span> → <span class="i">Program</span> <b>$end</b>
+
+<a name="rule_1" id="rule_1"></a>    1 <span class="i">Program</span> → <span class="i">DeclList</span>
+
+<a name="rule_2" id="rule_2"></a>    2 <span class="i">DeclList</span> → <span class="i">Decl</span> <span class="i">DeclList</span>
+<a name="rule_3" id="rule_3"></a>    3          | <span class="i">StmtList</span> <span class="i">DeclList</span>
+<a name="rule_4" id="rule_4"></a>    4          | <span class="i">Decl</span>
+
+<a name="rule_5" id="rule_5"></a>    5 <span class="i">Decl</span> → <span class="i">VarDecl</span>
+<a name="rule_6" id="rule_6"></a>    6      | <span class="i">StmtList</span>
+
+<a name="rule_7" id="rule_7"></a>    7 <span class="i">StmtList</span> → <span class="i">Stmt</span>
+<a name="rule_8" id="rule_8"></a>    8          | <span class="i">Stmt</span> <span class="i">StmtList</span>
+
+<a name="rule_9" id="rule_9"></a>    9 <span class="i">Stmt</span> → <b>SEMICOLON</b>
+<a name="rule_10" id="rule_10"></a>   10      | <span class="i">Expr</span> <b>SEMICOLON</b>
+
+<a name="rule_11" id="rule_11"></a>   11 <span class="i">VarDecl</span> → <b>TYPE</b> <b>ID</b> <b>SEMICOLON</b>
+
+<a name="rule_12" id="rule_12"></a>   12 <span class="i">AddExpr</span> → <b>ID</b> <b>BinOp</b> <span class="i">AddExpr</span>
+<a name="rule_13" id="rule_13"></a>   13         | <b>INTEGER</b> <b>BinOp</b> <span class="i">AddExpr</span>
+<a name="rule_14" id="rule_14"></a>   14         | <b>ID</b>
+<a name="rule_15" id="rule_15"></a>   15         | <b>INTEGER</b>
+
+<a name="rule_16" id="rule_16"></a>   16 <span class="i">Expr</span> → <b>ID</b> <b>EQ</b> <b>CHARACTER</b>
+<a name="rule_17" id="rule_17"></a>   17      | <b>ID</b> <b>EQ</b> <span class="i">AddExpr</span>
+<a name="rule_18" id="rule_18"></a>   18      | <b>WRITE</b> <b>ID</b>
+<a name="rule_19" id="rule_19"></a>   19      | <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+</p>
+
+<h3><a name="terminals" id="terminals"></a> Terminals, with rules where they appear</h3>
+
+<p class="pre"><b>$end</b> (0) <a href="#rule_0">0</a>
+<b>error</b> (256)
+<b>TYPE</b> (258) <a href="#rule_11">11</a>
+<b>ID</b> (259) <a href="#rule_11">11</a> <a href="#rule_12">12</a> <a href="#rule_14">14</a> <a href="#rule_16">16</a> <a href="#rule_17">17</a> <a href="#rule_18">18</a> <a href="#rule_19">19</a>
+<b>CHARACTER</b> (260) <a href="#rule_16">16</a>
+<b>SEMICOLON</b> (261) <a href="#rule_9">9</a> <a href="#rule_10">10</a> <a href="#rule_11">11</a> <a href="#rule_19">19</a>
+<b>EQ</b> (262) <a href="#rule_16">16</a> <a href="#rule_17">17</a> <a href="#rule_19">19</a>
+<b>LBRACE</b> (263)
+<b>RBRACE</b> (264)
+<b>BinOp</b> (265) <a href="#rule_12">12</a> <a href="#rule_13">13</a>
+<b>LBRACKET</b> (266) <a href="#rule_19">19</a>
+<b>RBRACKET</b> (267) <a href="#rule_19">19</a>
+<b>LPAREN</b> (268)
+<b>RPAREN</b> (269)
+<b>APOST</b> (270)
+<b>INTEGER</b> (271) <a href="#rule_13">13</a> <a href="#rule_15">15</a> <a href="#rule_19">19</a>
+<b>FLOAT</b> (272)
+<b>WRITE</b> (273) <a href="#rule_18">18</a>
+</p>
+
+<h3><a name="nonterminals" id="nonterminals"></a> Nonterminals, with rules where they appear</h3>
+
+<p class="pre"><b>$accept</b> (19)
+    on left: <a href="#rule_0">0</a>
+<b>Program</b> (20)
+    on left: <a href="#rule_1">1</a>
+    on right: <a href="#rule_0">0</a>
+<b>DeclList</b> (21)
+    on left: <a href="#rule_2">2</a> <a href="#rule_3">3</a> <a href="#rule_4">4</a>
+    on right: <a href="#rule_1">1</a> <a href="#rule_2">2</a> <a href="#rule_3">3</a>
+<b>Decl</b> (22)
+    on left: <a href="#rule_5">5</a> <a href="#rule_6">6</a>
+    on right: <a href="#rule_2">2</a> <a href="#rule_4">4</a>
+<b>StmtList</b> (23)
+    on left: <a href="#rule_7">7</a> <a href="#rule_8">8</a>
+    on right: <a href="#rule_3">3</a> <a href="#rule_6">6</a> <a href="#rule_8">8</a>
+<b>Stmt</b> (24)
+    on left: <a href="#rule_9">9</a> <a href="#rule_10">10</a>
+    on right: <a href="#rule_7">7</a> <a href="#rule_8">8</a>
+<b>VarDecl</b> (25)
+    on left: <a href="#rule_11">11</a>
+    on right: <a href="#rule_5">5</a>
+<b>AddExpr</b> (26)
+    on left: <a href="#rule_12">12</a> <a href="#rule_13">13</a> <a href="#rule_14">14</a> <a href="#rule_15">15</a>
+    on right: <a href="#rule_12">12</a> <a href="#rule_13">13</a> <a href="#rule_17">17</a>
+<b>Expr</b> (27)
+    on left: <a href="#rule_16">16</a> <a href="#rule_17">17</a> <a href="#rule_18">18</a> <a href="#rule_19">19</a>
+    on right: <a href="#rule_10">10</a>
+</p><h2><a name="automaton" id="automaton"></a> Automaton</h2>
+
+<h3><a name="state_0" id="state_0"></a>state 0</h3>
+
+<p class="pre">  <a href="#rule_0">  0</a> <span class="i">$accept</span> → <span class="point">.</span> <span class="i">Program</span> <b>$end</b>
+  <a href="#rule_1">  1</a> <span class="i">Program</span> → <span class="point">.</span> <span class="i">DeclList</span>
+  <a href="#rule_2">  2</a> <span class="i">DeclList</span> → <span class="point">.</span> <span class="i">Decl</span> <span class="i">DeclList</span>
+  <a href="#rule_3">  3</a>          | <span class="point">.</span> <span class="i">StmtList</span> <span class="i">DeclList</span>
+  <a href="#rule_4">  4</a>          | <span class="point">.</span> <span class="i">Decl</span>
+  <a href="#rule_5">  5</a> <span class="i">Decl</span> → <span class="point">.</span> <span class="i">VarDecl</span>
+  <a href="#rule_6">  6</a>      | <span class="point">.</span> <span class="i">StmtList</span>
+  <a href="#rule_7">  7</a> <span class="i">StmtList</span> → <span class="point">.</span> <span class="i">Stmt</span>
+  <a href="#rule_8">  8</a>          | <span class="point">.</span> <span class="i">Stmt</span> <span class="i">StmtList</span>
+  <a href="#rule_9">  9</a> <span class="i">Stmt</span> → <span class="point">.</span> <b>SEMICOLON</b>
+  <a href="#rule_10"> 10</a>      | <span class="point">.</span> <span class="i">Expr</span> <b>SEMICOLON</b>
+  <a href="#rule_11"> 11</a> <span class="i">VarDecl</span> → <span class="point">.</span> <b>TYPE</b> <b>ID</b> <b>SEMICOLON</b>
+  <a href="#rule_16"> 16</a> <span class="i">Expr</span> → <span class="point">.</span> <b>ID</b> <b>EQ</b> <b>CHARACTER</b>
+  <a href="#rule_17"> 17</a>      | <span class="point">.</span> <b>ID</b> <b>EQ</b> <span class="i">AddExpr</span>
+  <a href="#rule_18"> 18</a>      | <span class="point">.</span> <b>WRITE</b> <b>ID</b>
+  <a href="#rule_19"> 19</a>      | <span class="point">.</span> <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    TYPE       <a href="#state_1">shift, and go to state 1</a>
+    ID         <a href="#state_2">shift, and go to state 2</a>
+    SEMICOLON  <a href="#state_3">shift, and go to state 3</a>
+    WRITE      <a href="#state_4">shift, and go to state 4</a>
+
+    Program   <a href="#state_5">go to state 5</a>
+    DeclList  <a href="#state_6">go to state 6</a>
+    Decl      <a href="#state_7">go to state 7</a>
+    StmtList  <a href="#state_8">go to state 8</a>
+    Stmt      <a href="#state_9">go to state 9</a>
+    VarDecl   <a href="#state_10">go to state 10</a>
+    Expr      <a href="#state_11">go to state 11</a>
+</p>
+
+<h3><a name="state_1" id="state_1"></a>state 1</h3>
+
+<p class="pre">  <a href="#rule_11"> 11</a> <span class="i">VarDecl</span> → <b>TYPE</b> <span class="point">.</span> <b>ID</b> <b>SEMICOLON</b>
+
+    ID  <a href="#state_12">shift, and go to state 12</a>
+</p>
+
+<h3><a name="state_2" id="state_2"></a>state 2</h3>
+
+<p class="pre">  <a href="#rule_16"> 16</a> <span class="i">Expr</span> → <b>ID</b> <span class="point">.</span> <b>EQ</b> <b>CHARACTER</b>
+  <a href="#rule_17"> 17</a>      | <b>ID</b> <span class="point">.</span> <b>EQ</b> <span class="i">AddExpr</span>
+  <a href="#rule_19"> 19</a>      | <b>ID</b> <span class="point">.</span> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    EQ        <a href="#state_13">shift, and go to state 13</a>
+    LBRACKET  <a href="#state_14">shift, and go to state 14</a>
+</p>
+
+<h3><a name="state_3" id="state_3"></a>state 3</h3>
+
+<p class="pre">  <a href="#rule_9">  9</a> <span class="i">Stmt</span> → <b>SEMICOLON</b> <span class="point">.</span>
+
+    $default  <a href="#rule_9">reduce using rule 9</a> (Stmt)
+</p>
+
+<h3><a name="state_4" id="state_4"></a>state 4</h3>
+
+<p class="pre">  <a href="#rule_18"> 18</a> <span class="i">Expr</span> → <b>WRITE</b> <span class="point">.</span> <b>ID</b>
+
+    ID  <a href="#state_15">shift, and go to state 15</a>
+</p>
+
+<h3><a name="state_5" id="state_5"></a>state 5</h3>
+
+<p class="pre">  <a href="#rule_0">  0</a> <span class="i">$accept</span> → <span class="i">Program</span> <span class="point">.</span> <b>$end</b>
+
+    $end  <a href="#state_16">shift, and go to state 16</a>
+</p>
+
+<h3><a name="state_6" id="state_6"></a>state 6</h3>
+
+<p class="pre">  <a href="#rule_1">  1</a> <span class="i">Program</span> → <span class="i">DeclList</span> <span class="point">.</span>
+
+    $default  <a href="#rule_1">reduce using rule 1</a> (Program)
+</p>
+
+<h3><a name="state_7" id="state_7"></a>state 7</h3>
+
+<p class="pre">  <a href="#rule_2">  2</a> <span class="i">DeclList</span> → <span class="point">.</span> <span class="i">Decl</span> <span class="i">DeclList</span>
+  <a href="#rule_2">  2</a>          | <span class="i">Decl</span> <span class="point">.</span> <span class="i">DeclList</span>
+  <a href="#rule_3">  3</a>          | <span class="point">.</span> <span class="i">StmtList</span> <span class="i">DeclList</span>
+  <a href="#rule_4">  4</a>          | <span class="point">.</span> <span class="i">Decl</span>
+  <a href="#rule_4">  4</a>          | <span class="i">Decl</span> <span class="point">.</span>  [$end]
+  <a href="#rule_5">  5</a> <span class="i">Decl</span> → <span class="point">.</span> <span class="i">VarDecl</span>
+  <a href="#rule_6">  6</a>      | <span class="point">.</span> <span class="i">StmtList</span>
+  <a href="#rule_7">  7</a> <span class="i">StmtList</span> → <span class="point">.</span> <span class="i">Stmt</span>
+  <a href="#rule_8">  8</a>          | <span class="point">.</span> <span class="i">Stmt</span> <span class="i">StmtList</span>
+  <a href="#rule_9">  9</a> <span class="i">Stmt</span> → <span class="point">.</span> <b>SEMICOLON</b>
+  <a href="#rule_10"> 10</a>      | <span class="point">.</span> <span class="i">Expr</span> <b>SEMICOLON</b>
+  <a href="#rule_11"> 11</a> <span class="i">VarDecl</span> → <span class="point">.</span> <b>TYPE</b> <b>ID</b> <b>SEMICOLON</b>
+  <a href="#rule_16"> 16</a> <span class="i">Expr</span> → <span class="point">.</span> <b>ID</b> <b>EQ</b> <b>CHARACTER</b>
+  <a href="#rule_17"> 17</a>      | <span class="point">.</span> <b>ID</b> <b>EQ</b> <span class="i">AddExpr</span>
+  <a href="#rule_18"> 18</a>      | <span class="point">.</span> <b>WRITE</b> <b>ID</b>
+  <a href="#rule_19"> 19</a>      | <span class="point">.</span> <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    TYPE       <a href="#state_1">shift, and go to state 1</a>
+    ID         <a href="#state_2">shift, and go to state 2</a>
+    SEMICOLON  <a href="#state_3">shift, and go to state 3</a>
+    WRITE      <a href="#state_4">shift, and go to state 4</a>
+
+    $default  <a href="#rule_4">reduce using rule 4</a> (DeclList)
+
+    DeclList  <a href="#state_17">go to state 17</a>
+    Decl      <a href="#state_7">go to state 7</a>
+    StmtList  <a href="#state_8">go to state 8</a>
+    Stmt      <a href="#state_9">go to state 9</a>
+    VarDecl   <a href="#state_10">go to state 10</a>
+    Expr      <a href="#state_11">go to state 11</a>
+</p>
+
+<h3><a name="state_8" id="state_8"></a>state 8</h3>
+
+<p class="pre">  <a href="#rule_2">  2</a> <span class="i">DeclList</span> → <span class="point">.</span> <span class="i">Decl</span> <span class="i">DeclList</span>
+  <a href="#rule_3">  3</a>          | <span class="point">.</span> <span class="i">StmtList</span> <span class="i">DeclList</span>
+  <a href="#rule_3">  3</a>          | <span class="i">StmtList</span> <span class="point">.</span> <span class="i">DeclList</span>
+  <a href="#rule_4">  4</a>          | <span class="point">.</span> <span class="i">Decl</span>
+  <a href="#rule_5">  5</a> <span class="i">Decl</span> → <span class="point">.</span> <span class="i">VarDecl</span>
+  <a href="#rule_6">  6</a>      | <span class="point">.</span> <span class="i">StmtList</span>
+  <a href="#rule_6">  6</a>      | <span class="i">StmtList</span> <span class="point">.</span>  [$end, TYPE, ID, SEMICOLON, WRITE]
+  <a href="#rule_7">  7</a> <span class="i">StmtList</span> → <span class="point">.</span> <span class="i">Stmt</span>
+  <a href="#rule_8">  8</a>          | <span class="point">.</span> <span class="i">Stmt</span> <span class="i">StmtList</span>
+  <a href="#rule_9">  9</a> <span class="i">Stmt</span> → <span class="point">.</span> <b>SEMICOLON</b>
+  <a href="#rule_10"> 10</a>      | <span class="point">.</span> <span class="i">Expr</span> <b>SEMICOLON</b>
+  <a href="#rule_11"> 11</a> <span class="i">VarDecl</span> → <span class="point">.</span> <b>TYPE</b> <b>ID</b> <b>SEMICOLON</b>
+  <a href="#rule_16"> 16</a> <span class="i">Expr</span> → <span class="point">.</span> <b>ID</b> <b>EQ</b> <b>CHARACTER</b>
+  <a href="#rule_17"> 17</a>      | <span class="point">.</span> <b>ID</b> <b>EQ</b> <span class="i">AddExpr</span>
+  <a href="#rule_18"> 18</a>      | <span class="point">.</span> <b>WRITE</b> <b>ID</b>
+  <a href="#rule_19"> 19</a>      | <span class="point">.</span> <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    TYPE       <a href="#state_1">shift, and go to state 1</a>
+    ID         <a href="#state_2">shift, and go to state 2</a>
+    SEMICOLON  <a href="#state_3">shift, and go to state 3</a>
+    WRITE      <a href="#state_4">shift, and go to state 4</a>
+
+    TYPE       [<a href="#rule_6">reduce using rule 6</a> (Decl)]
+    ID         [<a href="#rule_6">reduce using rule 6</a> (Decl)]
+    SEMICOLON  [<a href="#rule_6">reduce using rule 6</a> (Decl)]
+    WRITE      [<a href="#rule_6">reduce using rule 6</a> (Decl)]
+    $default   <a href="#rule_6">reduce using rule 6</a> (Decl)
+
+    DeclList  <a href="#state_18">go to state 18</a>
+    Decl      <a href="#state_7">go to state 7</a>
+    StmtList  <a href="#state_8">go to state 8</a>
+    Stmt      <a href="#state_9">go to state 9</a>
+    VarDecl   <a href="#state_10">go to state 10</a>
+    Expr      <a href="#state_11">go to state 11</a>
+</p>
+
+<h3><a name="state_9" id="state_9"></a>state 9</h3>
+
+<p class="pre">  <a href="#rule_7">  7</a> <span class="i">StmtList</span> → <span class="point">.</span> <span class="i">Stmt</span>
+  <a href="#rule_7">  7</a>          | <span class="i">Stmt</span> <span class="point">.</span>  [$end, TYPE, ID, SEMICOLON, WRITE]
+  <a href="#rule_8">  8</a>          | <span class="point">.</span> <span class="i">Stmt</span> <span class="i">StmtList</span>
+  <a href="#rule_8">  8</a>          | <span class="i">Stmt</span> <span class="point">.</span> <span class="i">StmtList</span>
+  <a href="#rule_9">  9</a> <span class="i">Stmt</span> → <span class="point">.</span> <b>SEMICOLON</b>
+  <a href="#rule_10"> 10</a>      | <span class="point">.</span> <span class="i">Expr</span> <b>SEMICOLON</b>
+  <a href="#rule_16"> 16</a> <span class="i">Expr</span> → <span class="point">.</span> <b>ID</b> <b>EQ</b> <b>CHARACTER</b>
+  <a href="#rule_17"> 17</a>      | <span class="point">.</span> <b>ID</b> <b>EQ</b> <span class="i">AddExpr</span>
+  <a href="#rule_18"> 18</a>      | <span class="point">.</span> <b>WRITE</b> <b>ID</b>
+  <a href="#rule_19"> 19</a>      | <span class="point">.</span> <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    ID         <a href="#state_2">shift, and go to state 2</a>
+    SEMICOLON  <a href="#state_3">shift, and go to state 3</a>
+    WRITE      <a href="#state_4">shift, and go to state 4</a>
+
+    ID         [<a href="#rule_7">reduce using rule 7</a> (StmtList)]
+    SEMICOLON  [<a href="#rule_7">reduce using rule 7</a> (StmtList)]
+    WRITE      [<a href="#rule_7">reduce using rule 7</a> (StmtList)]
+    $default   <a href="#rule_7">reduce using rule 7</a> (StmtList)
+
+    StmtList  <a href="#state_19">go to state 19</a>
+    Stmt      <a href="#state_9">go to state 9</a>
+    Expr      <a href="#state_11">go to state 11</a>
+</p>
+
+<h3><a name="state_10" id="state_10"></a>state 10</h3>
+
+<p class="pre">  <a href="#rule_5">  5</a> <span class="i">Decl</span> → <span class="i">VarDecl</span> <span class="point">.</span>
+
+    $default  <a href="#rule_5">reduce using rule 5</a> (Decl)
+</p>
+
+<h3><a name="state_11" id="state_11"></a>state 11</h3>
+
+<p class="pre">  <a href="#rule_10"> 10</a> <span class="i">Stmt</span> → <span class="i">Expr</span> <span class="point">.</span> <b>SEMICOLON</b>
+
+    SEMICOLON  <a href="#state_20">shift, and go to state 20</a>
+</p>
+
+<h3><a name="state_12" id="state_12"></a>state 12</h3>
+
+<p class="pre">  <a href="#rule_11"> 11</a> <span class="i">VarDecl</span> → <b>TYPE</b> <b>ID</b> <span class="point">.</span> <b>SEMICOLON</b>
+
+    SEMICOLON  <a href="#state_21">shift, and go to state 21</a>
+</p>
+
+<h3><a name="state_13" id="state_13"></a>state 13</h3>
+
+<p class="pre">  <a href="#rule_12"> 12</a> <span class="i">AddExpr</span> → <span class="point">.</span> <b>ID</b> <b>BinOp</b> <span class="i">AddExpr</span>
+  <a href="#rule_13"> 13</a>         | <span class="point">.</span> <b>INTEGER</b> <b>BinOp</b> <span class="i">AddExpr</span>
+  <a href="#rule_14"> 14</a>         | <span class="point">.</span> <b>ID</b>
+  <a href="#rule_15"> 15</a>         | <span class="point">.</span> <b>INTEGER</b>
+  <a href="#rule_16"> 16</a> <span class="i">Expr</span> → <b>ID</b> <b>EQ</b> <span class="point">.</span> <b>CHARACTER</b>
+  <a href="#rule_17"> 17</a>      | <b>ID</b> <b>EQ</b> <span class="point">.</span> <span class="i">AddExpr</span>
+
+    ID         <a href="#state_22">shift, and go to state 22</a>
+    CHARACTER  <a href="#state_23">shift, and go to state 23</a>
+    INTEGER    <a href="#state_24">shift, and go to state 24</a>
+
+    AddExpr  <a href="#state_25">go to state 25</a>
+</p>
+
+<h3><a name="state_14" id="state_14"></a>state 14</h3>
+
+<p class="pre">  <a href="#rule_19"> 19</a> <span class="i">Expr</span> → <b>ID</b> <b>LBRACKET</b> <span class="point">.</span> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    INTEGER  <a href="#state_26">shift, and go to state 26</a>
+</p>
+
+<h3><a name="state_15" id="state_15"></a>state 15</h3>
+
+<p class="pre">  <a href="#rule_18"> 18</a> <span class="i">Expr</span> → <b>WRITE</b> <b>ID</b> <span class="point">.</span>
+
+    $default  <a href="#rule_18">reduce using rule 18</a> (Expr)
+</p>
+
+<h3><a name="state_16" id="state_16"></a>state 16</h3>
+
+<p class="pre">  <a href="#rule_0">  0</a> <span class="i">$accept</span> → <span class="i">Program</span> <b>$end</b> <span class="point">.</span>
+
+    $default  accept
+</p>
+
+<h3><a name="state_17" id="state_17"></a>state 17</h3>
+
+<p class="pre">  <a href="#rule_2">  2</a> <span class="i">DeclList</span> → <span class="i">Decl</span> <span class="i">DeclList</span> <span class="point">.</span>
+
+    $default  <a href="#rule_2">reduce using rule 2</a> (DeclList)
+</p>
+
+<h3><a name="state_18" id="state_18"></a>state 18</h3>
+
+<p class="pre">  <a href="#rule_3">  3</a> <span class="i">DeclList</span> → <span class="i">StmtList</span> <span class="i">DeclList</span> <span class="point">.</span>
+
+    $default  <a href="#rule_3">reduce using rule 3</a> (DeclList)
+</p>
+
+<h3><a name="state_19" id="state_19"></a>state 19</h3>
+
+<p class="pre">  <a href="#rule_8">  8</a> <span class="i">StmtList</span> → <span class="i">Stmt</span> <span class="i">StmtList</span> <span class="point">.</span>
+
+    $default  <a href="#rule_8">reduce using rule 8</a> (StmtList)
+</p>
+
+<h3><a name="state_20" id="state_20"></a>state 20</h3>
+
+<p class="pre">  <a href="#rule_10"> 10</a> <span class="i">Stmt</span> → <span class="i">Expr</span> <b>SEMICOLON</b> <span class="point">.</span>
+
+    $default  <a href="#rule_10">reduce using rule 10</a> (Stmt)
+</p>
+
+<h3><a name="state_21" id="state_21"></a>state 21</h3>
+
+<p class="pre">  <a href="#rule_11"> 11</a> <span class="i">VarDecl</span> → <b>TYPE</b> <b>ID</b> <b>SEMICOLON</b> <span class="point">.</span>
+
+    $default  <a href="#rule_11">reduce using rule 11</a> (VarDecl)
+</p>
+
+<h3><a name="state_22" id="state_22"></a>state 22</h3>
+
+<p class="pre">  <a href="#rule_12"> 12</a> <span class="i">AddExpr</span> → <b>ID</b> <span class="point">.</span> <b>BinOp</b> <span class="i">AddExpr</span>
+  <a href="#rule_14"> 14</a>         | <b>ID</b> <span class="point">.</span>  [SEMICOLON]
+
+    BinOp  <a href="#state_27">shift, and go to state 27</a>
+
+    $default  <a href="#rule_14">reduce using rule 14</a> (AddExpr)
+</p>
+
+<h3><a name="state_23" id="state_23"></a>state 23</h3>
+
+<p class="pre">  <a href="#rule_16"> 16</a> <span class="i">Expr</span> → <b>ID</b> <b>EQ</b> <b>CHARACTER</b> <span class="point">.</span>
+
+    $default  <a href="#rule_16">reduce using rule 16</a> (Expr)
+</p>
+
+<h3><a name="state_24" id="state_24"></a>state 24</h3>
+
+<p class="pre">  <a href="#rule_13"> 13</a> <span class="i">AddExpr</span> → <b>INTEGER</b> <span class="point">.</span> <b>BinOp</b> <span class="i">AddExpr</span>
+  <a href="#rule_15"> 15</a>         | <b>INTEGER</b> <span class="point">.</span>  [SEMICOLON]
+
+    BinOp  <a href="#state_28">shift, and go to state 28</a>
+
+    $default  <a href="#rule_15">reduce using rule 15</a> (AddExpr)
+</p>
+
+<h3><a name="state_25" id="state_25"></a>state 25</h3>
+
+<p class="pre">  <a href="#rule_17"> 17</a> <span class="i">Expr</span> → <b>ID</b> <b>EQ</b> <span class="i">AddExpr</span> <span class="point">.</span>
+
+    $default  <a href="#rule_17">reduce using rule 17</a> (Expr)
+</p>
+
+<h3><a name="state_26" id="state_26"></a>state 26</h3>
+
+<p class="pre">  <a href="#rule_19"> 19</a> <span class="i">Expr</span> → <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <span class="point">.</span> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    RBRACKET  <a href="#state_29">shift, and go to state 29</a>
+</p>
+
+<h3><a name="state_27" id="state_27"></a>state 27</h3>
+
+<p class="pre">  <a href="#rule_12"> 12</a> <span class="i">AddExpr</span> → <span class="point">.</span> <b>ID</b> <b>BinOp</b> <span class="i">AddExpr</span>
+  <a href="#rule_12"> 12</a>         | <b>ID</b> <b>BinOp</b> <span class="point">.</span> <span class="i">AddExpr</span>
+  <a href="#rule_13"> 13</a>         | <span class="point">.</span> <b>INTEGER</b> <b>BinOp</b> <span class="i">AddExpr</span>
+  <a href="#rule_14"> 14</a>         | <span class="point">.</span> <b>ID</b>
+  <a href="#rule_15"> 15</a>         | <span class="point">.</span> <b>INTEGER</b>
+
+    ID       <a href="#state_22">shift, and go to state 22</a>
+    INTEGER  <a href="#state_24">shift, and go to state 24</a>
+
+    AddExpr  <a href="#state_30">go to state 30</a>
+</p>
+
+<h3><a name="state_28" id="state_28"></a>state 28</h3>
+
+<p class="pre">  <a href="#rule_12"> 12</a> <span class="i">AddExpr</span> → <span class="point">.</span> <b>ID</b> <b>BinOp</b> <span class="i">AddExpr</span>
+  <a href="#rule_13"> 13</a>         | <span class="point">.</span> <b>INTEGER</b> <b>BinOp</b> <span class="i">AddExpr</span>
+  <a href="#rule_13"> 13</a>         | <b>INTEGER</b> <b>BinOp</b> <span class="point">.</span> <span class="i">AddExpr</span>
+  <a href="#rule_14"> 14</a>         | <span class="point">.</span> <b>ID</b>
+  <a href="#rule_15"> 15</a>         | <span class="point">.</span> <b>INTEGER</b>
+
+    ID       <a href="#state_22">shift, and go to state 22</a>
+    INTEGER  <a href="#state_24">shift, and go to state 24</a>
+
+    AddExpr  <a href="#state_31">go to state 31</a>
+</p>
+
+<h3><a name="state_29" id="state_29"></a>state 29</h3>
+
+<p class="pre">  <a href="#rule_19"> 19</a> <span class="i">Expr</span> → <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <span class="point">.</span> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    EQ  <a href="#state_32">shift, and go to state 32</a>
+</p>
+
+<h3><a name="state_30" id="state_30"></a>state 30</h3>
+
+<p class="pre">  <a href="#rule_12"> 12</a> <span class="i">AddExpr</span> → <b>ID</b> <b>BinOp</b> <span class="i">AddExpr</span> <span class="point">.</span>
+
+    $default  <a href="#rule_12">reduce using rule 12</a> (AddExpr)
+</p>
+
+<h3><a name="state_31" id="state_31"></a>state 31</h3>
+
+<p class="pre">  <a href="#rule_13"> 13</a> <span class="i">AddExpr</span> → <b>INTEGER</b> <b>BinOp</b> <span class="i">AddExpr</span> <span class="point">.</span>
+
+    $default  <a href="#rule_13">reduce using rule 13</a> (AddExpr)
+</p>
+
+<h3><a name="state_32" id="state_32"></a>state 32</h3>
+
+<p class="pre">  <a href="#rule_19"> 19</a> <span class="i">Expr</span> → <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <span class="point">.</span> <b>INTEGER</b> <b>SEMICOLON</b>
+
+    INTEGER  <a href="#state_33">shift, and go to state 33</a>
+</p>
+
+<h3><a name="state_33" id="state_33"></a>state 33</h3>
+
+<p class="pre">  <a href="#rule_19"> 19</a> <span class="i">Expr</span> → <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <span class="point">.</span> <b>SEMICOLON</b>
+
+    SEMICOLON  <a href="#state_34">shift, and go to state 34</a>
+</p>
+
+<h3><a name="state_34" id="state_34"></a>state 34</h3>
+
+<p class="pre">  <a href="#rule_19"> 19</a> <span class="i">Expr</span> → <b>ID</b> <b>LBRACKET</b> <b>INTEGER</b> <b>RBRACKET</b> <b>EQ</b> <b>INTEGER</b> <b>SEMICOLON</b> <span class="point">.</span>
+
+    $default  <a href="#rule_19">reduce using rule 19</a> (Expr)
+</p>
+
+<div id="footer"><hr />This document was generated using
+      <a href="http://www.gnu.org/software/bison/" title="GNU Bison">
+      GNU Bison 3.5.1</a>
+      XML Automaton Report.<br />
+      Verbatim copying and distribution of this entire page is
+      permitted in any medium, provided this notice is preserved.</div></body>
+</html>

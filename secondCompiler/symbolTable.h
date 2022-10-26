@@ -14,8 +14,9 @@ struct Entry
 	char itemName[50];  //the name of the identifier
 	char itemKind[8];  //is it a function or a variable?
 	char itemType[8];  // Is it int, char, etc.?
-	char itemValue[5]; 
+	char itemValue[50]; // 
 	int arrayLength;
+	int itemUsed;	   // is the item used?
 	char scope[50];     // global, or the name of the function
 };
 
@@ -39,16 +40,17 @@ void addItem(char itemName[50], char itemKind[8], char itemType[8], int arrayLen
 		strcpy(symTabItems[symTabIndex].itemType, itemType);
 		strcpy(symTabItems[symTabIndex].itemValue, "NULL");
 		symTabItems[symTabIndex].arrayLength = arrayLength;
+		symTabItems[symTabIndex].itemUsed = 0;
 		strcpy(symTabItems[symTabIndex].scope, scope);
 		symTabIndex++;
 	
 }
 
 void showSymTable(){
-	printf("\nitemID    itemName    itemKind    itemType     ArrayLength    itemSCope	 itemValue\n");
+	printf("\nitemID    itemName    itemKind    itemType     ArrayLength    itemScope	 itemValue   itemUsed?\n");
 	printf("-----------------------------------------------------------------------------------\n");
 	for (int i=0; i<symTabIndex; i++){
-		printf("%5d %10s  %10s  %10s %10d %15s %10s \n",symTabItems[i].itemID, symTabItems[i].itemName, symTabItems[i].itemKind, symTabItems[i].itemType, symTabItems[i].arrayLength, symTabItems[i].scope, symTabItems[i].itemValue);
+		printf("%5d %10s  %10s  %10s %10d %15s %10s %10d\n",symTabItems[i].itemID, symTabItems[i].itemName, symTabItems[i].itemKind, symTabItems[i].itemType, symTabItems[i].arrayLength, symTabItems[i].scope, symTabItems[i].itemValue, symTabItems[i].itemUsed);
 	}
 	
 

@@ -51,19 +51,20 @@ extern int yydebug;
   {
     TYPE = 258,
     ID = 259,
-    SEMICOLON = 260,
-    EQ = 261,
-    LBRACE = 262,
-    RBRACE = 263,
-    BinOp = 264,
-    AddOp = 265,
-    SubOp = 266,
-    MultOp = 267,
-    DivOp = 268,
-    LBRACKET = 269,
-    RBRACKET = 270,
-    NUMBER = 271,
-    WRITE = 272
+    CHARACTER = 260,
+    SEMICOLON = 261,
+    EQ = 262,
+    LBRACE = 263,
+    RBRACE = 264,
+    BinOp = 265,
+    LBRACKET = 266,
+    RBRACKET = 267,
+    LPAREN = 268,
+    RPAREN = 269,
+    APOST = 270,
+    INTEGER = 271,
+    FLOAT = 272,
+    WRITE = 273
   };
 #endif
 
@@ -74,11 +75,12 @@ union YYSTYPE
 #line 23 "parser.y"
 
 	int number;
-	char character;
+	float decimal;
+	char* character;
 	char* string;
 	struct AST* ast;
 
-#line 82 "parser.tab.h"
+#line 84 "parser.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

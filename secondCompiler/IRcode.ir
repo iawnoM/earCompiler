@@ -1,5 +1,0 @@
-T0 = 4
-T1 = 5
-T2 = 14
-write T0
-write T2

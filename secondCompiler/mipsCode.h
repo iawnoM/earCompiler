@@ -68,6 +68,15 @@ void emitMIPSWriteId(char * id){
     fclose(MIPScode);
 }
 
+void emitMIPSArrayDecl (char id[50], int size) {
+    MIPScode = fopen("MIPScode.asm", "a");
+
+    // int bits = size*4;
+    fprintf(MIPScode, "%s  .BLOCK   %d", id, size);
+
+    fclose(MIPScode);
+}
+
 void emitEndOfAssemblyCode(){
     MIPScode = fopen("MIPScode.asm", "a ");
 

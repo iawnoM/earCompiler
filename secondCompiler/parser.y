@@ -22,32 +22,38 @@ int semanticCheckPassed = 1;
 
 %union {
 	int number;
-	char character;
+	float decimal;
+	char* character;
 	char* string;
 	struct AST* ast;
 }
 
 %token <string> TYPE
 %token <string> ID
-%token <char> SEMICOLON
-%token <char> EQ
-%token <char> LBRACE
-%token <char> RBRACE
-%token <char> BinOp
-%token <char> AddOp
+%token <string> CHARACTER
+%token <character> SEMICOLON
+%token <character> EQ
+%token <character> LBRACE
+%token <character> RBRACE
+%token <character> BinOp
+/* %token <char> AddOp
 %token <char> SubOp
 %token <char> MultOp
-%token <char> DivOp
-%token <char> LBRACKET
-%token <char> RBRACKET
-%token <number> NUMBER
+%token <char> DivOp */
+%token <character> LBRACKET
+%token <character> RBRACKET
+%token <character> LPAREN
+%token <character> RPAREN
+%token <character> APOST
+%token <number> INTEGER
+%token <number> FLOAT
 %token WRITE
 
 
 %printer { fprintf(yyoutput, "%s", $$); } ID;
-%printer { fprintf(yyoutput, "%d", $$); } NUMBER;
+%printer { fprintf(yyoutput, "%d", $$); } INTEGER;
 
-%type <ast> Program DeclList Decl VarDecl Stmt StmtList AddExpr Expr //Primary
+%type <ast> Program DeclList Decl VarDecl ArrDecl Stmt StmtList AddExpr Expr ArrayExpr //Primary
 
 %start Program
 
@@ -76,16 +82,20 @@ DeclList:
 	Decl DeclList	{ 
 
 		// printf("\nTest debug DECLDECLLIST\n");
-		$1->left = $2;
+		$1->right = $2;
 		$$ = $1;
 	
 	} | StmtList DeclList  { 
 
 		// printf("Test debug STMTDECLLIST\n");
-		$1->left = $2;
+		$1->right = $2;
 		$$ = $1;
 
-	} | Decl {
+	} ArrDecl DeclList ArrDecl {
+		$1->right = $3
+	}
+	
+	| Decl {
 
 		$$ = $1;
 
@@ -95,6 +105,7 @@ DeclList:
 Decl: 		
 	VarDecl
 	| StmtList
+	| ArrDecl
 ;
 
 StmtList:	
@@ -142,17 +153,55 @@ VarDecl:
 		$$ = AST_Type("TYPE", $1, $2);
 		//printf("--------> Node:%s, %s\n", $$->nodeType, $$->RHS);
 
-	}
-						
+	} 
 ;
 
+ArrayExpr:
+	ID LBRACKET INTEGER RBRACKET EQ INTEGER {
+
+		printf("arr[%d] = %d\n", $3, $4);
+
+
+	}
+;
+
+ArrDecl:
+	TYPE ID LBRACKET INTEGER RBRACKET SEMICOLON {
+
+		printf("ARRAY DECL FOUND ----> \n");
+		// ----- SYMBOL TABLE ----- //
+		symTabAccess();
+		int inSymTab = found($2, currentScope);
+
+		if (inSymTab == 0) {
+			addItem($2, "ARRAY", $1, $4, 0);
+		} else {
+			printf("SEMANTIC ERROR: Var %s is already in the symbol table\n", $2);
+		}
+
+
+		// ----- AST ----- //
+		$$ = AST_assignment("ARR", $4, $2);
+
+
+
+		// ----- CODE GENERATION ----- //
+		emitArrayDecl($2, $4, getItemID($2, 0));
+
+	}
+;
+
+
+
+
 AddExpr:
-	ID AddOp AddExpr {
+	ID BinOp AddExpr {
 		
 		int idValue = getValue($1, currentScope);
 		printf("idValue = %d\n", idValue);
-		addNumToArray(idValue);
-		//addNumToArray($3);
+		// printf("$2 = %c\n", '+');
+		addNumToArray(idValue, $2);
+
 
 		// -------- SEMANTIC CHECK -------- //
 		// printf("ID is an int! rv = %s", getNodeType($1, currentScope));
@@ -162,9 +211,10 @@ AddExpr:
 
 	}
 
-	| NUMBER AddOp AddExpr {
-
-		addNumToArray($1);
+	| INTEGER BinOp AddExpr {
+		
+		// printf("Binop: %s\n", $2);
+		addNumToArray($1, $2);
 		
 		// char sum[50];
 		// sprintf(sum, "%d", returnSum());
@@ -173,9 +223,10 @@ AddExpr:
 
 	| ID {
 
+		char* noOp;
 		//Get value of ID from symbol table
 		int idValue = getValue($1, currentScope);
-		addNumToArray(idValue);
+		addNumToArray(idValue, noOp);
 
 		// -------- SEMANTIC CHECK -------- //
 		//printf("ID is an int! rv = %s", getNodeType($1, currentScope));
@@ -186,8 +237,11 @@ AddExpr:
 
 	}
 
-	| NUMBER {
-		addNumToArray($1);
+	| INTEGER {
+
+		char* noOp;
+		// printf("Number recog\n");
+		addNumToArray($1, noOp);
 	}
 
 ;
@@ -195,7 +249,12 @@ AddExpr:
 
 Expr:	
 
-	ID EQ AddExpr { 
+	ID EQ CHARACTER {
+		printf("Character found!!\n");
+		$$ = AST_assignment("=", $1, $3);
+	}
+
+	| ID EQ AddExpr { 
 
 		// Assign int value to char array
 		char exprValue[50];
@@ -208,7 +267,7 @@ Expr:
 
 
 		// -------- SYMBOL TABLE -------- //
-
+		// setItemValue returns 1 if the item was added
 		semanticCheckPassed = setItemValue($1, exprValue, currentScope);
 
 		// -------- AST -------- //
@@ -217,7 +276,7 @@ Expr:
 
 		// -------- CODE GENERATION -------- //
 
-		if (semanticCheckPassed == 1) {
+		if (semanticCheckPassed) {
 			printf("\n\n>>> AssignStmt Rule is SEMANTICALLY correct and IR code is emitted! <<<\n\n");
 
 			// ---- EMIT IR 3-ADDRESS CODE ---- //
@@ -249,7 +308,7 @@ Expr:
 			semanticCheckPassed = 0;
 		}
 
-		if (semanticCheckPassed == 1) {
+		if (semanticCheckPassed) {
 			printf("\n\nRule is semantically correct!\n\n");
 
 
@@ -262,6 +321,14 @@ Expr:
 			// emitMIPSWriteId($2);
 			emitMIPSWriteInt(idNum);
 		}
+	}
+
+	| ID LBRACKET INTEGER RBRACKET EQ INTEGER SEMICOLON {
+
+		printf("%s[%d] = %d\n", $1, $3, $6);
+
+		// $$ = AST_assignment("");
+
 	}
 
 ;
@@ -297,9 +364,9 @@ int main(int argc, char**argv)
 	}
 	yyparse();
 
-	printf("\n\n##### IR CODE EMMITED #####\n\n");
-	printf("\n\n##### MIPS CODE EMMITED #####\n\n");
-	printf("\n\n##### COMPILER CLOSING #####\n\n");
+	printf("\n\n##### IR CODE EMMITED #####\n");
+	printf("\n\n##### MIPS CODE EMMITED #####\n");
+	printf("\n\n##### COMPILER CLOSING #####\n");
 	
 	emitEndOfAssemblyCode();
 }

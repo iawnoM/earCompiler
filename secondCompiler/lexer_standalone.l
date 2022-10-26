@@ -24,6 +24,7 @@ delim       [ \t\n]
 NUMBER      {digit}+(\.{digit}+)?(E[+\-]?(digit)+)?
 ws          {delim}+
 BinOp 		[[-]|[+]|[*]|[/]]
+CHARACTER   ["'"]({letter}|{digit})["'"]
 /*C-Minus Starter Grammar*/
 
 %%
@@ -42,12 +43,20 @@ BinOp 		[[-]|[+]|[*]|[/]]
 "int"	{words++; chars += strlen(yytext);
 			printf("%s : TYPE\n", yytext);
 		}
+		
+"char"	{words++; chars += strlen(yytext);
+			printf("%s : TYPE\n", yytext);
+		}
 
 "write"	{words++; chars += strlen(yytext);
 			printf("%s : KEYWORD\n", yytext);
 		}
 
 {boolean}
+
+{CHARACTER} {words++; chars += strlen(yytext);
+			printf("%s : CHARACTER FOUND\n", yytext);
+}
 
 {ID}	{words++; chars += strlen(yytext);
 			  printf("%s : IDENTIFIER\n",yytext);

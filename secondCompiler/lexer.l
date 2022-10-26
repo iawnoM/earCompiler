@@ -17,21 +17,23 @@ letter      [a-zA-Z]
 digit       [0-9]
 ID          {letter}({letter}|{digit})*
 delim       [ \t\n]
-NUMBER      {digit}+(\.{digit}+)?(E[+\-]?(digit)+)?
+INTEGER     {digit}?
+FLOAT       {digit}+(\.{digit}+)?(E[+\-]?(digit)+)?
 ws          {delim}+
+CHARACTER   ["'"]({letter}|{digit})["'"]
 
 %%
-"/*"    				{
-							int c;
-							while((c = input()) != 0) {
-								if(c == '*') {
-									if((c = input()) == '/')
-										break;
-									else
-										unput(c);
-								}
-							}
-						}
+"/*"   {
+		int c;
+		while((c = input()) != 0) {
+			if(c == '*') {
+				if((c = input()) == '/')
+					break;
+				else
+					unput(c);
+			}
+		}
+	}
 						
 "int"	{words++; chars += strlen(yytext);
 			printf("%s : TYPE\n", yytext);
@@ -64,10 +66,23 @@ ws          {delim}+
 			  return ID;
 			}
 			
-{NUMBER}		{words++; chars += strlen(yytext);
-			  printf("%s : NUMBER\n",yytext);
+{INTEGER}	{words++; chars += strlen(yytext);
+			  printf("%s : INTEGER\n",yytext);
 			  yylval.number = atoi(strdup(yytext)); 
-			  return NUMBER;
+			  return INTEGER;
+			}
+
+{CHARACTER}	 {
+	words++; chars += strlen(yytext);
+	printf("%s : IDENTIFIER\n",yytext);
+	yylval.string = strdup(yytext); 
+	return CHARACTER;
+}
+
+{FLOAT}		{words++; chars += strlen(yytext);
+			printf("%s : FLOAT\n",yytext);
+			  yylval.number = atoi(strdup(yytext)); 
+			  return FLOAT;
 			}
 
 ";"		{chars++;
@@ -83,27 +98,27 @@ ws          {delim}+
 		}
 
 "+"		{chars++;
-		  printf("%s : AddOp\n", yytext);
+		  printf("%s : BinOp\n", yytext);
 		  yylval.string = strdup(yytext); 
-		  return AddOp;
+		  return BinOp;
 		}
 
 "-"		{chars++;
-		  printf("%s : SubOp\n", yytext);
+		  printf("%s : BinOp\n", yytext);
 		  yylval.string = strdup(yytext); 
-		  return SubOp;
+		  return BinOp;
 		}
 
 "/"		{chars++;
-		  printf("%s : DivOp\n", yytext);
+		  printf("%s : BinOp\n", yytext);
 		  yylval.string = strdup(yytext); 
-		  return DivOp;
+		  return BinOp;
 		}
 
 "*"		{chars++;
-		  printf("%s : MultOp\n", yytext);
+		  printf("%s : BinOp\n", yytext);
 		  yylval.string = strdup(yytext); 
-		  return MultOp;
+		  return BinOp;
 		}
 
 "{"		{chars++;
@@ -127,7 +142,7 @@ ws          {delim}+
 "]"		{chars++;
 		  printf("%s : RBRACKET\n", yytext);
 		  yylval.string = strdup(yytext); 
-		  return LBRACKET;
+		  return RBRACKET;
 		}
 
 "("		{chars++;
@@ -140,6 +155,12 @@ ws          {delim}+
 		  printf("%s : RPAREN\n", yytext);
 		  yylval.string = strdup(yytext); 
 		  return RPAREN;
+		}
+
+"'"		{chars++;
+		  printf("%s : APOST\n", yytext);
+		  yylval.string = strdup(yytext); 
+		  return APOST;
 		}
 		
 [\n]	{lines++; chars=0;}

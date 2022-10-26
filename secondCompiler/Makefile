@@ -12,7 +12,7 @@ lexer: lexer_standalone.l
 parser.tab.c parser.tab.h:	parser.y
 	bison -t -v -d --graph -x parser.y
 	bison --print-datadir
-	xsltproc /usr/local/share/bison/xslt/xml2xhtml.xsl parser.xml >parser.html
+	xsltproc /usr/share/bison/xslt/xml2xhtml.xsl parser.xml >parser.html
 
 lex.yy.c: lexer.l parser.tab.h
 	flex lexer.l
